@@ -145,12 +145,16 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         const pageWidth = doc.internal.pageSize.getWidth(); // Largura da página (ex: 210)
+
+        doc.addFont("Calibri.ttf", "Calibri", "normal");
+        doc.addFont("Calibrib.ttf", "Calibrib", "normal");
         
         let nomeFinal = nomeInput.value.trim() || "relatorio_vistoria";
 
         btnPdf.disabled = true;
         btnPdf.innerText = "Gerando...";
 
+        doc.setFont("Calibri");
         doc.text(`CHECK LIST`, pageWidth / 2, 10, { align: "center", setFontSize: 20 });
 
         fotos.forEach((foto, index) => {
