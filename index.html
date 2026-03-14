@@ -125,6 +125,7 @@
             labelCamera.innerText = `📷 Tirar ${qtd + 1}ª Foto`;
             legenda.src = `foto_${qtd+1}.png`
         } else {
+            legenda.src = ""
             status.innerText = "5 fotos capturadas. Deseja adicionar danos?";
             labelCamera.style.display = "none";
             btnExtra.style.display = "block";
@@ -159,7 +160,16 @@
             doc.setFontSize(14);
             doc.setTextColor(0);
             const tipoFoto = index < 5 ? "Obrigatória" : "Dano/Extra";
-            doc.text(`Foto ${index + 1} (${tipoFoto})`, 10, 20);
+            switch(index) {
+
+                case 1: txt_foto = "Frente";
+                case 2: txt_foto = "Lado Direito"
+                case 3: txt_foto = "Lado Esquerdo"
+                case 4: txt_foto = "Traseira"
+                case 5: txt_foto = "Estepe"
+
+            }
+            doc.text(`Foto ${index + 1} (${tipoFoto}) : ${txt_foto}`, 10, 20);
             
             // Imagem (Ajustada para caber com os textos embaixo)
             doc.addImage(foto, 'JPEG', 10, 30, 190, 230, undefined, 'FAST');
