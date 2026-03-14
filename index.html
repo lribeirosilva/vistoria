@@ -123,7 +123,7 @@
         if (qtd < LIMITE_OBRIGATORIO) {
             status.innerText = `Foto ${qtd} de ${LIMITE_OBRIGATORIO} enviada.`;
             labelCamera.innerText = `📷 Tirar ${qtd + 1}ª Foto`;
-            legenda.src = `foto_${qtd}.png`
+            legenda.src = `foto_${qtd+1}.png`
         } else {
             status.innerText = "5 fotos capturadas. Deseja adicionar danos?";
             labelCamera.style.display = "none";
