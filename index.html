@@ -160,11 +160,11 @@
         btnPdf.innerText = "Gerando...";
 
         // Fonte para Texto
-        doc.addFont("Calibri.ttf", "Calibri", "normal");
-        doc.addFont("Calibrib.ttf", "Calibrib", "normal");
-        //doc.setFont("courier", "bold");
+        //doc.addFont("Calibri.ttf", "Calibri", "normal");
+        //doc.addFont("Calibrib.ttf", "Calibrib", "normal");
+        doc.setFont("courier", "bold");
 
-        doc.setFont("Calibrib");
+        //doc.setFont("Calibrib");
         doc.text(`CHECK LIST`, pageWidth / 2, 10, { align: "center", setFontSize: 20 });
 
         doc.setFont("Calibri");
