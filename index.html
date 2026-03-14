@@ -159,6 +159,7 @@
         btnPdf.disabled = true;
         btnPdf.innerText = "Gerando...";
 
+        // Fonte para Texto
         //doc.addFont("Calibri.ttf", "Calibri", "normal");
         //doc.addFont("Calibrib.ttf", "Calibrib", "normal");
         doc.setFont("courier", "bold");
@@ -208,7 +209,7 @@
 
         //doc.setFont("Calibri");
         doc.text(`${nomePessoa.value}`, pageWidth / 2, 275, { align: "center", setFontSize: 14 });
-        doc.text(`Nº Funcional/: ${numFuncional.value}`, pageWidth / 2, 282, { align: "center", setFontSize: 14 });
+        doc.text(`Nº Funcional: ${numFuncional.value}`, pageWidth / 2, 282, { align: "center", setFontSize: 14 });
 
         doc.save(`${nomeFinal}.pdf`);
         
