@@ -162,22 +162,22 @@
             const tipoFoto = index < 5 ? "Obrigatória" : "Dano/Extra";
             switch(index) {
 
-                case 0: txt_foto = "Frente";
+                case 0: txt_foto = " - Frente";
                         break
-                case 1: txt_foto = "Lado Direito"
+                case 1: txt_foto = " - Lado Direito"
                         break
-                case 2: txt_foto = "Lado Esquerdo"
+                case 2: txt_foto = " - Lado Esquerdo"
                         break
-                case 3: txt_foto = "Traseira"
+                case 3: txt_foto = " - Traseira"
                         break
-                case 4: txt_foto = "Estepe"
+                case 4: txt_foto = " - Estepe"
                         break
                 default: txt_foto = ""
             }
             if (index > 5) {
                 doc.text(`Foto ${index + 1} (${tipoFoto})`, 10, 20);
             } else {
-                doc.text(`Foto ${index + 1} (${tipoFoto}) - ${txt_foto}`, 10, 20);
+                doc.text(`Foto ${index + 1} (${tipoFoto}) ${txt_foto}`, 10, 20);
             }
             
             // Imagem (Ajustada para caber com os textos embaixo)
