@@ -63,11 +63,11 @@
 
     <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
-    <img id="legenda" src="foto_1.png" style="height: 70%; width:70%;"></img>
-
     <div id="status">Tire a 1ª foto obrigatória</div>
 
     <div class="preview-container" id="previewContainer"></div>
+
+    <img id="legenda" src="foto_1.png" style="height: 70%; width:70%;"></img>
 
     <label for="camera-input" id="label-camera" class="btn btn-camera">📷 Tirar Foto</label>
     <input type="file" id="camera-input" accept="image/*" capture="environment">
@@ -125,7 +125,7 @@
             labelCamera.innerText = `📷 Tirar ${qtd + 1}ª Foto`;
             legenda.src = `foto_${qtd+1}.png`
         } else {
-            legenda.src = ""
+            legenda.src = `foto_6.png`
             status.innerText = "5 fotos capturadas. Deseja adicionar danos?";
             labelCamera.style.display = "none";
             btnExtra.style.display = "block";
