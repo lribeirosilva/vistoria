@@ -187,14 +187,14 @@
             // Imagem (Ajustada para caber com os textos embaixo)
             doc.addImage(foto, 'JPEG', 10, 30, 190, 230, undefined, 'FAST');
 
-            // --- TEXTO CENTRALIZADO NO RODAPÉ ---
-            doc.setFontSize(12);
-            // doc.text(texto, x, y, opções)
 
         });
 
+
+        // --- TEXTO CENTRALIZADO NO RODAPÉ ---
         doc.setFontSize(14);
-        //doc.setTextColor(0);
+        // doc.text(texto, x, y, opções)
+
         doc.text(`Responsável: ${nomePessoa.value}`, pageWidth / 2, 275, { align: "center" });
         doc.text(`Funcional: ${numFuncional.value}`, pageWidth / 2, 282, { align: "center" });
 
