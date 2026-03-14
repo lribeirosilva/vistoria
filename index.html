@@ -165,8 +165,6 @@
         doc.setFont("Calibrib");
         doc.text(`CHECK LIST`, pageWidth / 2, 10, { align: "center", setFontSize: 20 });
 
-        doc.setFont("Calibri");
-
         fotos.forEach((foto, index) => {
             if (index > 0) doc.addPage();
             
@@ -189,8 +187,10 @@
                 default: txt_foto = ""
             }
             if (index > 5) {
+                doc.setFont("Calibri");
                 doc.text(`Foto ${index + 1} (${tipoFoto})`, 10, 20);
             } else {
+                doc.setFont("Calibri");
                 doc.text(`Foto ${index + 1} (${tipoFoto}) ${txt_foto}`, 10, 20);
             }
             
@@ -204,6 +204,7 @@
         //doc.setFontSize(14);
         // doc.text(texto, x, y, opções)
 
+        doc.setFont("Calibri");
         doc.text(`${nomePessoa.value}`, pageWidth / 2, 275, { align: "center", setFontSize: 14 });
         doc.text(`Nº Funcional/: ${numFuncional.value}`, pageWidth / 2, 282, { align: "center", setFontSize: 14 });
 
