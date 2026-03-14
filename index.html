@@ -57,11 +57,13 @@
         <input type="text" id="nome-pessoa" placeholder="Digite o nome completo">
     </div>
     <div class="input-group">
-        <label for="num-funcional">Nº Funcional:</label>
+        <label for="num-funcional">Nº Funcional/Identificação:</label>
         <input type="text" id="num-funcional" placeholder="Digite a funcional">
     </div>
 
     <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+    <img id="legenda" src="foto_1.png" style="height: 70%; width:70%;"></img>
 
     <div id="status">Tire a 1ª foto obrigatória</div>
 
@@ -121,6 +123,7 @@
         if (qtd < LIMITE_OBRIGATORIO) {
             status.innerText = `Foto ${qtd} de ${LIMITE_OBRIGATORIO} enviada.`;
             labelCamera.innerText = `📷 Tirar ${qtd + 1}ª Foto`;
+            legenda.src = `Foto_${qtd}.png`
         } else {
             status.innerText = "5 fotos capturadas. Deseja adicionar danos?";
             labelCamera.style.display = "none";
