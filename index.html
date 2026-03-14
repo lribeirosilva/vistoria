@@ -8,6 +8,24 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Relatório de Vistoria Veicular</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        function verificarDispositivo() {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (!isMobile) {
+                document.body.innerHTML = `
+                    <div style="text-align:center; margin-top:100px; font-family: sans-serif;">
+                        <h1>Acesso Negado</h1>
+                        <p>Este sistema de vistoria só pode ser acessado através de um celular.</p>
+                        <img src="https://cdn-icons-png.flaticon.com/512/644/644617.png" width="100">
+                    </div>`;
+                window.stop(); // Para o carregamento do restante do script
+            }
+        }
+
+    // Chamar a função assim que a página carregar
+    verificarDispositivo();
+    </script>
     <style>
         body { font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background-color: #f0f2f5; }
         .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
@@ -64,22 +82,6 @@
 </div>
 
 <script>
-    function verificarDispositivo() {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        
-        if (!isMobile) {
-            document.body.innerHTML = `
-                <div style="text-align:center; margin-top:100px; font-family: sans-serif;">
-                    <h1>Acesso Negado</h1>
-                    <p>Este sistema de vistoria só pode ser acessado através de um celular.</p>
-                    <img src="https://cdn-icons-png.flaticon.com/512/644/644617.png" width="100">
-                </div>`;
-            window.stop(); // Para o carregamento do restante do script
-        }
-    }
-
-    // Chamar a função assim que a página carregar
-    verificarDispositivo();
 
     const input = document.getElementById('camera-input');
     const status = document.getElementById('status');
