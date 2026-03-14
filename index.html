@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capturar Fotos e Gerar PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background-color: #f0f2f5; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .preview-container { display: flex; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+        .preview-img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        .btn-camera { background-color: #28a745; color: white; }
+        .btn-pdf { background-color: #007bff; color: white; display: none; }
+        .btn-extra { background-color: #ffc107; color: #212529; display: none; }
+        input[type="file"] { display: none; }
+        
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { font-size: 14px; color: #666; font-weight: bold; display: block; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        
+        #area-finalizacao { display: none; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
+        #status { font-weight: bold; color: #333; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Relatório de Fotos</h2>
+
+    <div class="input-group">
+        <label for="nome-pessoa">Nome do Responsável:</label>
+        <input type="text" id="nome-pessoa" placeholder="Digite o nome completo">
+    </div>
+    <div class="input-group">
+        <label for="num-funcional">Número Funcional:</label>
+        <input type="text" id="num-funcional" placeholder="Digite a funcional">
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+    <div id="status">Tire a 1ª foto obrigatória</div>
+
+    <div class="preview-container" id="previewContainer"></div>
+
+    <label for="camera-input" id="label-camera" class="btn btn-camera">📷 Tirar Foto</label>
+    <input type="file" id="camera-input" accept="image/*" capture="environment">
+
+    <button id="btn-foto-extra" class="btn btn-extra">⚠️ Adicionar Foto de Dano</button>
+
+    <div id="area-finalizacao">
+        <div class="input-group">
+            <label for="nome-arquivo">Nome do arquivo PDF:</label>
+            <input type="text" id="nome-arquivo" placeholder="Ex: vistoria_vtr_01">
+        </div>
+        <button id="btn-gerar-pdf" class="btn btn-pdf" onclick="gerarPDF()">📄 Salvar PDF</button>
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById('camera-input');
+    const status = document.getElementById('status');
+    const previewContainer = document.getElementById('previewContainer');
+    const btnPdf = document.getElementById('btn-gerar-pdf');
+    const btnExtra = document.getElementById('btn-foto-extra');
+    const labelCamera = document.getElementById('label-camera');
+    const areaFinalizacao = document.getElementById('area-finalizacao');
+    const nomeInput = document.getElementById('nome-arquivo');
+    const nomePessoa = document.getElementById('nome-pessoa');
+    const numFuncional = document.getElementById('num-funcional');
+    
+    let fotos = [];
+    const LIMITE_OBRIGATORIO = 5;
+
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            fotos.push(event.target.result);
+
+            const imgTag = document.createElement('img');
+            imgTag.src = event.target.result;
+            imgTag.className = 'preview-img';
+            previewContainer.appendChild(imgTag);
+
+            atualizarInterface();
+        };
+        reader.readAsDataURL(file);
+        input.value = ""; 
+    });
+
+    function atualizarInterface() {
+        const qtd = fotos.length;
+        if (qtd < LIMITE_OBRIGATORIO) {
+            status.innerText = `Foto ${qtd} de ${LIMITE_OBRIGATORIO} enviada.`;
+            labelCamera.innerText = `📷 Tirar ${qtd + 1}ª Foto`;
+        } else {
+            status.innerText = "5 fotos capturadas. Deseja adicionar danos?";
+            labelCamera.style.display = "none";
+            btnExtra.style.display = "block";
+            areaFinalizacao.style.display = "block";
+            btnPdf.style.display = "block";
+        }
+    }
+
+    btnExtra.onclick = () => input.click();
+
+    async function gerarPDF() {
+        if (nomePessoa.value.trim() === "" || numFuncional.value.trim() === "") {
+            alert("Por favor, preencha o Nome e a Funcional antes de salvar.");
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth(); // Largura da página (ex: 210)
+        
+        let nomeFinal = nomeInput.value.trim() || "relatorio_vistoria";
+
+        btnPdf.disabled = true;
+        btnPdf.innerText = "Gerando...";
+
+        doc.text(`CHECK LIST`, pageWidth / 2, 10, { align: "center", setFontSize: 20 });
+
+        fotos.forEach((foto, index) => {
+            if (index > 0) doc.addPage();
+            
+            // Título da Foto
+            doc.setFontSize(14);
+            doc.setTextColor(0);
+            const tipoFoto = index < 5 ? "Obrigatória" : "Dano/Extra";
+            doc.text(`Foto ${index + 1} (${tipoFoto})`, 10, 20);
+            
+            // Imagem (Ajustada para caber com os textos embaixo)
+            doc.addImage(foto, 'JPEG', 10, 30, 190, 230, undefined, 'FAST');
+
+            // --- TEXTO CENTRALIZADO NO RODAPÉ ---
+            doc.setFontSize(12);
+            // doc.text(texto, x, y, opções)
+
+        });
+
+        doc.text(`Responsável: ${nomePessoa.value}`, pageWidth / 2, 275, { align: "center" });
+        doc.text(`Funcional: ${numFuncional.value}`, pageWidth / 2, 282, { align: "center" });
+
+        doc.save(`${nomeFinal}.pdf`);
+        
+        btnPdf.innerText = "PDF Salvo!";
+        btnPdf.style.backgroundColor = "#28a745";
+    }
+</script>
+
+</body>
+</html>
