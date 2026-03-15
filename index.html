@@ -7,8 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Relatório de Vistoria Veicular</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script>
+        <script>
         function verificarDispositivo() {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             
@@ -26,6 +25,7 @@
         // Chamar a função assim que a página carregar
         verificarDispositivo();
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body { font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background-color: #f0f2f5; }
         .card { background: white; padding: 50px; border-radius: 15px; box-shadow: 0 4px 32px rgba(0,0,0,0.1); width: 100%; max-width: 320px; text-align: center; }
@@ -208,7 +208,7 @@
 
         // --- TEXTO CENTRALIZADO NO RODAPÉ ---
         //doc.setFontSize(14);
-        // doc.text(texto, x, y, opções)
+        //doc.text(texto, x, y, opções)
 
         //doc.setFont("Calibri");
         doc.text(`${nomePessoa.value}`, pageWidth / 2, 275, { align: "center", setFontSize: 14 });
