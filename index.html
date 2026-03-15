@@ -48,6 +48,14 @@
         
         #area-finalizacao { display: none; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
         #status { font-weight: bold; color: #333; margin-bottom: 2px; }
+
+         .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        .pergunta { font-size: 14px; color: #666; font-weight: bold; display: block; margin-bottom: 5px;}
+        .opcoes { width: 30%; text-align: right; white-space: nowrap; }
+        label { margin-left: 5px; margin-right: 10px; font-weight: bold; }
+        input[type="radio"] { padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
     </style>
     <link rel="icon" type="image/png" href="icone.png">
     <link rel="apple-touch-icon" href="icone.png">
@@ -65,7 +73,6 @@
         <label for="num-funcional">Nº Funcional/Identificação:</label>
         <input type="text" id="num-funcional" placeholder="Digite a funcional">
     </div>
-
     <table>
         <tr>
             <td class="pergunta">Pneus em bom estado?</td>
