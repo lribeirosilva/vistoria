@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Relatório de Vistoria Veicular</title>
-        <script>
+    <script>
         function verificarDispositivo() {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             
@@ -24,6 +24,20 @@
 
         // Chamar a função assim que a página carregar
         verificarDispositivo();
+    </script>
+    <script>
+        (function() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // Expressão regular para identificar dispositivos móveis e tablets
+            const isMobileOrTablet = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+
+            if (!isMobileOrTablet) {
+            // Se NÃO for mobile/tablet, redireciona ou limpa a página
+            alert("Acesso permitido apenas para celulares e tablets.");
+            window.location.href = "https://www.google.com"; // Mude para a URL que desejar
+            }
+        })();
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -212,7 +226,7 @@
 
         //doc.setFont("Calibri");
         doc.text(`${nomePessoa.value}`, pageWidth / 2, 275, { align: "center", setFontSize: 14 });
-        doc.text(`Nº Funcional: ${numFuncional.value}`, pageWidth / 2, 282, { align: "center", setFontSize: 14 });
+        doc.text(`Nº Funcional/Identificação: ${numFuncional.value}`, pageWidth / 2, 282, { align: "center", setFontSize: 14 });
 
         doc.save(`${nomeFinal}.pdf`);
         
