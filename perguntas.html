@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vistoria Veicular Rápida</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        .pergunta { width: 70%; }
+        .opcoes { width: 30%; text-align: right; white-space: nowrap; }
+        label { margin-left: 5px; margin-right: 10px; font-weight: bold; }
+        button { width: 100%; padding: 15px; margin-top: 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        input[type="radio"] { transform: scale(1.5); vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Checklist de Vistoria</h2>
+    <form id="vistoriaForm">
+        <table>
+            <tr>
+                <td class="pergunta">Pneus em bom estado?</td>
+                <td class="opcoes">
+                    <input type="radio" name="pneus" value="sim" id="p1s"> <label for="p1s">Sim</label>
+                    <input type="radio" name="pneus" value="nao" id="p1n"> <label for="p1n">Não</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="pergunta">Luzes e faróis funcionando?</td>
+                <td class="opcoes">
+                    <input type="radio" name="luzes" value="sim" id="p2s"> <label for="p2s">Sim</label>
+                    <input type="radio" name="luzes" value="nao" id="p2n"> <label for="p2n">Não</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="pergunta">Possui estepe e macaco?</td>
+                <td class="opcoes">
+                    <input type="radio" name="estepe" value="sim" id="p3s"> <label for="p3s">Sim</label>
+                    <input type="radio" name="estepe" value="nao" id="p3n"> <label for="p3n">Não</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="pergunta">Vidros sem trincas?</td>
+                <td class="opcoes">
+                    <input type="radio" name="vidros" value="sim" id="p4s"> <label for="p4s">Sim</label>
+                    <input type="radio" name="vidros" value="nao" id="p4n"> <label for="p4n">Não</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="pergunta">Nível de óleo/água OK?</td>
+                <td class="opcoes">
+                    <input type="radio" name="niveis" value="sim" id="p5s"> <label for="p5s">Sim</label>
+                    <input type="radio" name="niveis" value="nao" id="p5n"> <label for="p5n">Não</label>
+                </td>
+            </tr>
+        </table>
+
+        <button type="button" onclick="finalizar()">Finalizar Vistoria</button>
+    </form>
+</div>
+
+<script>
+    function finalizar() {
+        alert("Vistoria registrada com sucesso!");
+        // Aqui você poderia enviar os dados para um banco ou e-mail
+    }
+</script>
+
+</body>
+</html>
