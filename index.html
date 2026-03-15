@@ -241,7 +241,21 @@
         doc.text(`CHECK LIST`, pageWidth / 2, 10, { align: "center", setFontSize: 20 });
 
         dados.forEach((valor, chave) => {
-            resultado += `${chave.toUpperCase()}: ${valor}\n`;
+
+            switch(chave.toUpperCase()){
+
+                case "PNEUS" : resultado += `Pneus em bom estado?: ${valor}\n`;
+                    break;
+                case "LUZES" : resultado += `Luzes e faróis funcionando?: ${valor}\n`;
+                    break;   
+                case "ESTEPE" : resultado += `Possui estepe e macaco?: ${valor}\n`;
+                    break;   
+                case "VIDROS" : resultado += `Vidros sem trincas?: ${valor}\n`;
+                    break;
+                case "NIVEL" : resultado += `Nível de óleo/água OK? ${valor}\n`;
+                    break;
+            }
+            
             
         });
 
@@ -251,7 +265,7 @@
         doc.setFont("Calibri");
 
         fotos.forEach((foto, index) => {
-            if (index > 0) doc.addPage();
+            if (index >= 0) doc.addPage();
             
             // Título da Foto
             doc.setFontSize(14);
