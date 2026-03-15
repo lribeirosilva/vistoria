@@ -40,15 +40,17 @@
 
     <form id="vistoriaForm">
         <table>
-            <tr><td>Pneus OK?</td><td><input type="radio" name="pneus" value="sim" checked>S <input type="radio" name="pneus" value="nao">N</td></tr>
-            <tr><td>Luzes OK?</td><td><input type="radio" name="luzes" value="sim" checked>S <input type="radio" name="luzes" value="nao">N</td></tr>
-            <tr><td>Estepe OK?</td><td><input type="radio" name="estepe" value="sim" checked>S <input type="radio" name="estepe" value="nao">N</td></tr>
-            <tr><td>Vidros OK?</td><td><input type="radio" name="vidros" value="sim" checked>S <input type="radio" name="vidros" value="nao">N</td></tr>
-            <tr><td>Níveis OK?</td><td><input type="radio" name="niveis" value="sim" checked>S <input type="radio" name="niveis" value="nao">N</td></tr>
+            <tr><td>Pneus em bom estado?</td><td><input type="radio" name="pneus" value="sim" checked>Sim <input type="radio" name="pneus" value="nao">Não</td></tr>
+            <tr><td>Luzes e faróis funcionando? OK?</td><td><input type="radio" name="luzes" value="sim" checked>Sim <input type="radio" name="luzes" value="nao">Não</td></tr>
+            <tr><td>Possui estepe e macaco?</td><td><input type="radio" name="estepe" value="sim" checked>Sim <input type="radio" name="estepe" value="nao">Não</td></tr>
+            <tr><td>Vidros sem trincas?</td><td><input type="radio" name="vidros" value="sim" checked>Sim <input type="radio" name="vidros" value="nao">Não</td></tr>
+            <tr><td>Nível de óleo/água OK?</td><td><input type="radio" name="niveis" value="sim" checked>Sim <input type="radio" name="niveis" value="nao">Não</td></tr>
         </table>
     </form>
 
     <hr>
+
+    <img id="legenda" src="foto_1.png" style="height: 70%; width:70%;"></img>
 
     <div id="status">Tire a 1ª foto obrigatória</div>
     <div class="preview-container" id="previewContainer"></div>
@@ -120,7 +122,9 @@
         if (qtd < LIMITE_OBRIGATORIO) {
             status.innerText = `Foto ${qtd} de ${LIMITE_OBRIGATORIO} enviada.`;
             labelCamera.innerText = `📷 Tirar ${qtd + 1}ª Foto`;
+            legenda.src = `foto_${qtd+1}.png`
         } else {
+            legenda.src = `foto_6.png`
             status.innerText = "Fotos obrigatórias concluídas.";
             labelCamera.style.display = "none";
             btnExtra.style.display = "block";
@@ -190,7 +194,7 @@
         // Rodapé na última página
         doc.setFontSize(10);
         doc.text(`Responsável: ${nomePessoa}`, 10, 280);
-        doc.text(`ID: ${numFuncional}`, 10, 287);
+        doc.text(`Nº Funcional/Identificação: ${numFuncional}`, 10, 287);
 
         doc.save(`${nomeArquivo}.pdf`);
     }
