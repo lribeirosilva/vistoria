@@ -7,7 +7,24 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Relatório de Vistoria Veicular</title>
+    <script>
+        function verificarDispositivo() {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (!isMobile) {
+                document.body.innerHTML = `
+                    <div style="text-align:center; margin-top:100px; font-family: sans-serif;">
+                        <h1>Acesso Negado</h1>
+                        <p>Este sistema só pode ser acessado através de um celular/tablet.</p>
+                        <img src="https://cdn-icons-png.flaticon.com/512/644/644617.png" width="100">
+                    </div>`;
+                window.stop(); // Para o carregamento do restante do script
+            }
+        }
 
+        // Chamar a função assim que a página carregar
+        verificarDispositivo();
+    </script>
     <script>
         (function() {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -22,9 +39,10 @@
                     <p>Este sistema só pode ser acessado através de um celular/tablet.</p>
                     <img src="https://cdn-icons-png.flaticon.com/512/644/644617.png" width="100">
                 </div>`;
+                window.stop(); // Para o carregamento do restante do script
                 // Se NÃO for mobile/tablet, redireciona ou limpa a página
                 alert("Acesso permitido apenas para celulares e tablets.");
-                //window.location.href = "https://www.google.com"; // Mude para a URL que desejar
+                window.location.href = "https://www.google.com"; // Mude para a URL que desejar
             }
         })();
     </script>
