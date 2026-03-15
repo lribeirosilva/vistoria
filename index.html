@@ -148,16 +148,7 @@
     const nomePessoa = document.getElementById('nome-pessoa');
     const numFuncional = document.getElementById('num-funcional');
     const nomeArquivo = document.getElementById('nome-arquivo');
-
-    // 1. Seleciona o formulário pelo ID
-    const formulario = document.getElementById('vistoriaForm');
-    
-    // 2. Cria o objeto FormData com os dados do formulário
-    const dados = new FormData(formulario);
-    
-    // 3. Criamos um objeto vazio para organizar os resultados
-    let resultado = "Resumo da Vistoria:\n\n";
-    
+   
     // 4. Percorremos os dados (chave = nome do campo, valor = sim/nao)
     //dados.forEach((valor, chave) => {
     //    resultado += `${chave.toUpperCase()}: ${valor}\n`;
@@ -240,6 +231,15 @@
  
         doc.text(`CHECK LIST`, pageWidth / 2, 10, { align: "center", setFontSize: 20 });
 
+        // 1. Seleciona o formulário pelo ID
+        const formulario = document.getElementById('vistoriaForm');
+        
+        // 2. Cria o objeto FormData com os dados do formulário
+        const dados = new FormData(formulario);
+        
+        // 3. Criamos um objeto vazio para organizar os resultados
+        let resultado = "Resumo da Vistoria:\n\n";
+
         dados.forEach((valor, chave) => {
 
             switch(chave.toUpperCase()){
@@ -252,14 +252,14 @@
                     break;   
                 case "VIDROS" : resultado += `Vidros sem trincas?: ${valor}\n`;
                     break;
-                case "NIVEL" : resultado += `Nível de óleo/água OK? ${valor}\n`;
+                case "NIVEIS" : resultado += `Nível de óleo/água OK? ${valor}\n`;
                     break;
             }
             
             
         });
 
-         doc.text(`${resultado}`, 20, 10)
+         doc.text(`${resultado}`, 20, 20)
        
 
         doc.setFont("Calibri");
