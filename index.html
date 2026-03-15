@@ -40,6 +40,7 @@
         .btn-camera { background-color: #28a745; color: white; margin-bottom: 5px; padding: 15px; width: 90%; height: 25px;}
         .btn-pdf { background-color: #007bff; color: white; display: none; }
         .btn-extra { background-color: #ffc107; color: #212529; display: none; }
+        .desc-dano { display: none; }
         input[type="file"] { display: none; }
         
         .input-group { text-align: left; margin-bottom: 15px; }
@@ -125,6 +126,10 @@
     <input type="file" id="camera-input" accept="image/*" capture="environment">
 
     <button id="btn-foto-extra" class="btn btn-extra">⚠️ Adicionar Foto de Dano</button>
+    <div class="input-group desc-dano">
+        <label for="desc-dano">Descrição do Dano:</label>
+        <input class="desc-dano" type="text" id="desc-dano" placeholder="Digite uma descrição para o dano">
+    </div>
 
     <div id="area-finalizacao">
         <div class="input-group">
@@ -148,6 +153,7 @@
     const nomePessoa = document.getElementById('nome-pessoa');
     const numFuncional = document.getElementById('num-funcional');
     const nomeArquivo = document.getElementById('nome-arquivo');
+    const descDano = document.getElementById('desc-dano')
    
     // 4. Percorremos os dados (chave = nome do campo, valor = sim/nao)
     //dados.forEach((valor, chave) => {
@@ -159,6 +165,7 @@
     //alert(resultado);
     
     let fotos = [];
+    let desc = [];
     const LIMITE_OBRIGATORIO = 5;
 
     input.addEventListener('change', function(e) {
@@ -193,6 +200,8 @@
             btnExtra.style.display = "block";
             areaFinalizacao.style.display = "block";
             btnPdf.style.display = "block";
+            descDano.style.display = "block";
+            desc.push(descDano.value)
         }
     }
 
@@ -283,7 +292,7 @@
                         break
                 case 4: txt_foto = "- Estepe"
                         break
-                default: txt_foto = ""
+                default: txt_foto = `- ${descDano[index-5]}`
             }
             
             if (index > 5) {
