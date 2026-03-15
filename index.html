@@ -168,7 +168,20 @@
         doc.text("RESULTADOS:", 10, y);
         y += 7;
         dados.forEach((valor, chave) => {
-            doc.text(`${chave.toUpperCase()}: ${valor.toUpperCase()}`, 15, y);
+            switch(chave.toUpperCase()){
+
+                case "PNEUS" : resultado = `Pneus em bom estado? ${valor.toUpperCase()}\n`;
+                    break;
+                case "LUZES" : resultado = `Luzes e faróis funcionando? ${valor.toUpperCase()}\n`;
+                    break;   
+                case "ESTEPE" : resultado = `Possui estepe e macaco? ${valor.toUpperCase()}\n`;
+                    break;   
+                case "VIDROS" : resultado = `Vidros sem trincas? ${valor.toUpperCase()}\n`;
+                    break;
+                case "NIVEIS" : resultado = `Nível de óleo/água OK? ${valor.toUpperCase()}\n`;
+                    break;
+            }
+            doc.text(`${resultado}`, 15, y);
             y += 6;
         });
 
@@ -193,8 +206,8 @@
 
         // Rodapé na última página
         doc.setFontSize(10);
-        doc.text(`Responsável: ${nomePessoa}`, 10, 280);
-        doc.text(`Nº Funcional/Identificação: ${numFuncional}`, 10, 287);
+        doc.text(`${nomePessoa.value}`, pageWidth / 2, 275, { align: "center", setFontSize: 14 });
+        doc.text(`Nº Funcional/Identificação: ${numFuncional.value}`, pageWidth / 2, 282, { align: "center", setFontSize: 14 });
 
         doc.save(`${nomeArquivo}.pdf`);
     }
