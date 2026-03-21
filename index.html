@@ -65,7 +65,10 @@
         <label>Nº Funcional:</label>
         <input type="text" id="num-funcional" placeholder="Identificação">
     </div>
-
+    <div class="input-group">
+        <label>Observação:</label>
+        <input type="textarea" id="Observação" placeholder="Observação">
+    </div>
     <hr>
 
     <form id="vistoriaForm">
@@ -75,6 +78,7 @@
             <tr><td class="input-group"><label>Possui estepe e macaco?</label></td><td><input type="radio" name="estepe" value="sim" checked>Sim <input type="radio" name="estepe" value="nao">Não</td></tr>
             <tr><td class="input-group"><label>Vidros sem trincas?</label></td><td><input type="radio" name="vidros" value="sim" checked>Sim <input type="radio" name="vidros" value="nao">Não</td></tr>
             <tr><td class="input-group"><label>Nível de óleo/água OK?</label></td><td><input type="radio" name="niveis" value="sim" checked>Sim <input type="radio" name="niveis" value="nao">Não</td></tr>
+            <tr><td class="input-group"><label>Veículo lavadoK?</label></td><td><input type="radio" name="lavado" value="sim" checked>Sim <input type="radio" name="lavado" value="nao">Não</td></tr>
         </table>
     </form>
 
@@ -118,7 +122,7 @@
 
     let fotos = [];
     let descricoesDanos = []; // Array para guardar os textos dos danos
-    const LIMITE_OBRIGATORIO = 5;
+    const LIMITE_OBRIGATORIO = 6;
 
     input.addEventListener('change', function(e) {
         const file = e.target.files[0];
@@ -177,6 +181,7 @@
     async function gerarPDF() {
         const nomePessoa = document.getElementById('nome-pessoa').value;
         const numFuncional = document.getElementById('num-funcional').value;
+        const txtObservacao = document.getElementById('observacao').value;
         const nomeArquivo = document.getElementById('nome-arquivo').value;
 
         if (!nomePessoa || !numFuncional || !nomeArquivo) {
@@ -211,18 +216,22 @@
                     break;
                 case "NIVEIS" : resultado = `Nível de óleo/água OK? ${valor.toUpperCase()}\n`;
                     break;
+                case "LAVADO" : resultado = `Veículo lavado? ${valor.toUpperCase()}\n`;
+                    break;
             }
             doc.text(`${resultado}`, 15, y);
             y += 6;
         });
+
+        doc.text(`${txtObservacao}`, 20, y);
 
         // Fotos
         fotos.forEach((foto, index) => {
             doc.addPage();
             let legenda = "";
             
-            if (index < 5) {
-                const tipos = ["Frente", "Lado Direito", "Lado Esquerdo", "Traseira", "Estepe"];
+            if (index < 6) {
+                const tipos = ["Painel", "Frente", "Lado Direito", "Lado Esquerdo", "Traseira", "Estepe"];
                 legenda = `Foto ${index + 1}: ${tipos[index]}`;
             } else {
                 // Pega a descrição correta do array de danos (index - 5)
