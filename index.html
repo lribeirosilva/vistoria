@@ -200,6 +200,10 @@
         doc.setFont("helvetica", "normal");
         const splitObs = doc.splitTextToSize(txtObservacao || "Sem observações adicionais.", pageWidth - 30);
         doc.text(splitObs, 15, y);
+        
+        // Rodapé
+        doc.text(`Responsável: ${nomePessoa} - Gerado via Sistema de Vistoria`, pageWidth / 2, 285, { align: "center" });
+        doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 290, { align: "center", setFontSize: 14 });
 
         // Páginas de Fotos
         fotos.forEach((foto, index) => {
@@ -231,7 +235,7 @@
             doc.setPage(i);
             doc.setFontSize(8);
             doc.text(`Responsável: ${nomePessoa} - Gerado via Sistema de Vistoria`, pageWidth / 2, 285, { align: "center" });
-            doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 288, { align: "center", setFontSize: 14 });
+            doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 290, { align: "center", setFontSize: 14 });
         }
         // Rodapé na última página
         //doc.setFontSize(10);
