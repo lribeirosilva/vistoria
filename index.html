@@ -3,45 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Relatório de Vistoria Veicular</title>
-    <link rel="icon" type="image/png" href="icone.png">
-    <link rel="apple-touch-icon" href="icone.png">
-    <script>
-        (function() {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-            // Expressão regular para identificar dispositivos móveis e tablets
-            const isMobileOrTablet = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
-
-            if (!isMobileOrTablet) {
-                /*
-                document.body.innerHTML = `
-                <div style="text-align:center; margin-top:100px; font-family: sans-serif;">
-                    <h1>Acesso Negado</h1>
-                    <p>Este sistema só pode ser acessado através de um celular/tablet.</p>
-                    <img src="https://cdn-icons-png.flaticon.com/512/644/644617.png" width="100">
-                </div>`;
-                window.stop(); // Para o carregamento do restante do script
-                */
-                // Se NÃO for mobile/tablet, redireciona ou limpa a página
-                //alert("Acesso permitido apenas para celulares e tablets.");
-                //window.location.href = "https://www.google.com"; // Mude para a URL que desejar
-            }
-        })();
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body { font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background-color: #f0f2f5; }
         .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 32px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
         .preview-container { display: flex; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
         .preview-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd; }
-        .btn { display: block; width: 93%; padding: 15px; margin: 10px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; box-sizing: border-box; }
         .btn-camera { background-color: #28a745; color: white; }
         .btn-pdf { background-color: #007bff; color: white; display: none; }
-        .btn-extra { width: 93%; background-color: #ffc107; color: #212529; display: none; }
+        .btn-extra { background-color: #ffc107; color: #212529; display: none; }
         .input-group { text-align: left; margin-bottom: 15px; }
         .input-group label { font-size: 14px; color: #666; font-weight: bold; display: block; margin-bottom: 5px; }
         .input-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
@@ -50,12 +22,13 @@
         table { width: 100%; border-collapse: collapse; }
         td { padding: 8px; border-bottom: 1px solid #eee; text-align: left; font-size: 14px; }
         input[type="file"] { display: none; }
+        #legenda { max-width: 100%; height: auto; margin-bottom: 10px; border-radius: 8px; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Relatório de Vistoria Veicular</h2>
+    <h2>Relatório de Vistoria</h2>
 
     <div class="input-group">
         <label>Responsável:</label>
@@ -67,32 +40,28 @@
     </div>
     <div class="input-group">
         <label>Observação:</label>
-        <input type="textarea" id="Observacao" placeholder="Observação">
+        <input type="text" id="observacao" placeholder="Notas adicionais">
     </div>
-    <hr>
 
     <form id="vistoriaForm">
         <table>
-            <tr><td class="input-group"><label>Pneus em bom estado?</label></td><td><input type="radio" name="pneus" value="sim" checked>Sim <input type="radio" name="pneus" value="nao">Não</td></tr>
-            <tr><td class="input-group"><label>Luzes e faróis funcionando? </label></td><td><input type="radio" name="luzes" value="sim" checked>Sim <input type="radio" name="luzes" value="nao">Não</td></tr>
-            <tr><td class="input-group"><label>Possui estepe e macaco?</label></td><td><input type="radio" name="estepe" value="sim" checked>Sim <input type="radio" name="estepe" value="nao">Não</td></tr>
-            <tr><td class="input-group"><label>Vidros sem trincas?</label></td><td><input type="radio" name="vidros" value="sim" checked>Sim <input type="radio" name="vidros" value="nao">Não</td></tr>
-            <tr><td class="input-group"><label>Nível de óleo/água OK?</label></td><td><input type="radio" name="niveis" value="sim" checked>Sim <input type="radio" name="niveis" value="nao">Não</td></tr>
-            <tr><td class="input-group"><label>Veículo lavado?</label></td><td><input type="radio" name="lavado" value="sim" checked>Sim <input type="radio" name="lavado" value="nao">Não</td></tr>
+            <tr><td>Pneus em bom estado?</td><td><input type="radio" name="pneus" value="sim" checked>S <input type="radio" name="pneus" value="nao">N</td></tr>
+            <tr><td>Luzes funcionando?</td><td><input type="radio" name="luzes" value="sim" checked>S <input type="radio" name="luzes" value="nao">N</td></tr>
+            <tr><td>Estepe/Macaco OK?</td><td><input type="radio" name="estepe" value="sim" checked>S <input type="radio" name="estepe" value="nao">N</td></tr>
+            <tr><td>Vidros sem trincas?</td><td><input type="radio" name="vidros" value="sim" checked>S <input type="radio" name="vidros" value="nao">N</td></tr>
+            <tr><td>Níveis (Óleo/Água)?</td><td><input type="radio" name="niveis" value="sim" checked>S <input type="radio" name="niveis" value="nao">N</td></tr>
+            <tr><td>Veículo lavado?</td><td><input type="radio" name="lavado" value="sim" checked>S <input type="radio" name="lavado" value="nao">N</td></tr>
         </table>
     </form>
 
-    <hr>
-
-    
-    <div id="status">Tire a 1ª foto obrigatória</div>
+    <div id="status" style="margin-top:15px; font-weight:bold; color:#007bff;">Tire a 1ª foto obrigatória</div>
     <div class="preview-container" id="previewContainer"></div>
 
-    <img id="legenda" src="foto_1.png" style="height: 70%; width:70%;"></img>
+    <img id="legenda" src="foto_1.png" alt="Guia de foto">
 
     <div id="container-texto-dano" class="desc-dano-container">
-        <label style="font-size: 12px; font-weight: bold;">DESCREVA O DANO ANTES DE TIRAR A FOTO:</label>
-        <input type="text" id="desc-dano" style="width:300; padding:8px; border-radius:5px; border:1px solid #ccc;" placeholder="Ex: Riscos na porta direita">
+        <label>DESCREVA O DANO:</label>
+        <input type="text" id="desc-dano" style="width:100%; padding:8px; border-radius:5px; border:1px solid #ccc; box-sizing: border-box;" placeholder="Ex: Riscos na porta">
     </div>
 
     <label for="camera-input" id="label-camera" class="btn btn-camera">📷 Tirar 1ª Foto</label>
@@ -103,9 +72,9 @@
     <div id="area-finalizacao">
         <div class="input-group">
             <label>Nome do arquivo PDF:</label>
-            <input type="text" id="nome-arquivo" placeholder="Ex: vistoria_01">
+            <input type="text" id="nome-arquivo" placeholder="Ex: vistoria_abc1234">
         </div>
-        <button id="btn-gerar-pdf" class="btn btn-pdf" onclick="gerarPDF()">📄 Salvar PDF</button>
+        <button id="btn-gerar-pdf" class="btn btn-pdf" onclick="gerarPDF()">📄 Salvar Relatório PDF</button>
     </div>
 </div>
 
@@ -119,10 +88,12 @@
     const areaFinalizacao = document.getElementById('area-finalizacao');
     const descDanoInput = document.getElementById('desc-dano');
     const containerTextoDano = document.getElementById('container-texto-dano');
+    const legendaImg = document.getElementById('legenda');
 
     let fotos = [];
-    let descricoesDanos = []; // Array para guardar os textos dos danos
+    let descricoesDanos = [];
     const LIMITE_OBRIGATORIO = 6;
+    const tiposObrigatorios = ["Painel", "Frente", "Lado Direito", "Lado Esquerdo", "Traseira", "Estepe"];
 
     input.addEventListener('change', function(e) {
         const file = e.target.files[0];
@@ -132,11 +103,10 @@
         reader.onload = function(event) {
             const fotoBase64 = event.target.result;
             
-            // Se já passamos das fotos obrigatórias, salvamos o texto do dano
             if (fotos.length >= LIMITE_OBRIGATORIO) {
                 const texto = descDanoInput.value.trim() || "Dano não especificado";
                 descricoesDanos.push(texto);
-                descDanoInput.value = ""; // Limpa para a próxima
+                descDanoInput.value = ""; 
             }
 
             fotos.push(fotoBase64);
@@ -156,14 +126,14 @@
         const qtd = fotos.length;
         if (qtd < LIMITE_OBRIGATORIO) {
             status.innerText = `Foto ${qtd} de ${LIMITE_OBRIGATORIO} enviada.`;
-            labelCamera.innerText = `📷 Tirar ${qtd + 1}ª Foto`;
-            legenda.src = `foto_${qtd+1}.png`
+            labelCamera.innerText = `📷 Tirar Foto: ${tiposObrigatorios[qtd]}`;
+            legendaImg.src = `foto_${qtd+1}.png`;
         } else {
-            legenda.src = `foto_7.png`
+            legendaImg.src = `foto_7.png`;
             status.innerText = "Fotos obrigatórias concluídas.";
             labelCamera.style.display = "none";
             btnExtra.style.display = "block";
-            containerTextoDano.style.display = "block"; // Mostra o campo de texto
+            containerTextoDano.style.display = "block";
             areaFinalizacao.style.display = "block";
             btnPdf.style.display = "block";
         }
@@ -171,7 +141,7 @@
 
     btnExtra.onclick = () => {
         if (descDanoInput.value.trim() === "") {
-            alert("Por favor, descreva o dano no campo amarelo antes de tirar a foto.");
+            alert("Por favor, descreva o dano antes de tirar a foto.");
             descDanoInput.focus();
             return;
         }
@@ -185,7 +155,7 @@
         const nomeArquivo = document.getElementById('nome-arquivo').value;
 
         if (!nomePessoa || !numFuncional || !nomeArquivo) {
-            alert("Preencha todos os campos antes de salvar.");
+            alert("Preencha o Responsável, Nº Funcional e Nome do Arquivo.");
             return;
         }
 
@@ -193,61 +163,75 @@
         const doc = new jsPDF();
         const pageWidth = doc.internal.pageSize.getWidth();
 
-        // Cabeçalho
-        doc.setFont("courier", "bold");
-        doc.text("CHECK LIST DE VISTORIA", pageWidth / 2, 15, { align: "center" });
-
-        // Dados do Formulário
+        // Página 1: Dados
+        doc.setFont("helvetica", "bold");
+        doc.text("RELATÓRIO DE VISTORIA VEICULAR", pageWidth / 2, 20, { align: "center" });
+        
         doc.setFontSize(10);
-        let y = 30;
-        const dados = new FormData(document.getElementById('vistoriaForm'));
-        doc.text("RESULTADOS:", 10, y);
-        y += 7;
-        dados.forEach((valor, chave) => {
-            switch(chave.toUpperCase()){
+        doc.setFont("helvetica", "normal");
+        let y = 40;
+        doc.text(`Responsável: ${nomePessoa}`, 15, y); y += 7;
+        doc.text(`Nº Funcional: ${numFuncional}`, 15, y); y += 7;
+        doc.text(`Data: ${new Date().toLocaleDateString('pt-BR')}`, 15, y); y += 15;
 
-                case "PNEUS" : resultado = `Pneus em bom estado? ${valor.toUpperCase()}\n`;
-                    break;
-                case "LUZES" : resultado = `Luzes e faróis funcionando? ${valor.toUpperCase()}\n`;
-                    break;   
-                case "ESTEPE" : resultado = `Possui estepe e macaco? ${valor.toUpperCase()}\n`;
-                    break;   
-                case "VIDROS" : resultado = `Vidros sem trincas? ${valor.toUpperCase()}\n`;
-                    break;
-                case "NIVEIS" : resultado = `Nível de óleo/água OK? ${valor.toUpperCase()}\n`;
-                    break;
-                case "LAVADO" : resultado = `Veículo lavado? ${valor.toUpperCase()}\n`;
-                    break;
-            }
-            doc.text(`${resultado}`, 15, y);
-            y += 6;
+        doc.setFont("helvetica", "bold");
+        doc.text("CHECKLIST:", 15, y); y += 10;
+        doc.setFont("helvetica", "normal");
+
+        const formVistoria = new FormData(document.getElementById('vistoriaForm'));
+        const labelsMap = {
+            pneus: "Pneus em bom estado?",
+            luzes: "Luzes e faróis funcionando?",
+            estepe: "Possui estepe e macaco?",
+            vidros: "Vidros sem trincas?",
+            niveis: "Nível de óleo/água OK?",
+            lavado: "Veículo lavado?"
+        };
+
+        formVistoria.forEach((valor, chave) => {
+            const label = labelsMap[chave] || chave;
+            doc.text(`${label} [ ${valor.toUpperCase()} ]`, 20, y);
+            y += 7;
         });
 
-        doc.text(`${txtObservacao}`, 20, y);
+        y += 10;
+        doc.setFont("helvetica", "bold");
+        doc.text("OBSERVAÇÕES:", 15, y); y += 7;
+        doc.setFont("helvetica", "normal");
+        const splitObs = doc.splitTextToSize(txtObservacao || "Sem observações adicionais.", pageWidth - 30);
+        doc.text(splitObs, 15, y);
 
-        // Fotos
+        // Páginas de Fotos
         fotos.forEach((foto, index) => {
             doc.addPage();
-            let legenda = "";
+            let legendaTxt = "";
             
-            if (index < 6) {
-                const tipos = ["Painel", "Frente", "Lado Direito", "Lado Esquerdo", "Traseira", "Estepe"];
-                legenda = `Foto ${index + 1}: ${tipos[index]}`;
+            if (index < LIMITE_OBRIGATORIO) {
+                legendaTxt = `FOTO ${index + 1}: ${tiposObrigatorios[index].toUpperCase()}`;
             } else {
-                // Pega a descrição correta do array de danos (index - 5)
-                const textoDano = descricoesDanos[index - 5];
-                legenda = `DANO: ${textoDano}`;
+                const textoDano = descricoesDanos[index - LIMITE_OBRIGATORIO];
+                legendaTxt = `DANO ADICIONAL: ${textoDano.toUpperCase()}`;
             }
 
+            doc.setFont("helvetica", "bold");
             doc.setFontSize(12);
-            doc.text(legenda, 10, 15);
-            doc.addImage(foto, 'JPEG', 10, 25, 190, 150); // Ajustei altura para não distorcer tanto
+            doc.text(legendaTxt, 15, 20);
+            
+            // Adiciona a imagem (ajustado para caber na página mantendo proporção aproximada)
+            try {
+                doc.addImage(foto, 'JPEG', 15, 30, 180, 135);
+            } catch (e) {
+                console.error("Erro ao adicionar imagem", e);
+            }
         });
 
-        // Rodapé na última página
-        doc.setFontSize(10);
-        doc.text(`${nomePessoa}`, pageWidth / 2, 275, { align: "center", setFontSize: 14 });
-        doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 282, { align: "center", setFontSize: 14 });
+        // Rodapé com assinatura simples em todas as páginas de fotos (opcional)
+        const totalPaginas = doc.internal.getNumberOfPages();
+        for(let i = 2; i <= totalPaginas; i++) {
+            doc.setPage(i);
+            doc.setFontSize(8);
+            doc.text(`Responsável: ${nomePessoa} - Gerado via Sistema de Vistoria`, pageWidth / 2, 285, { align: "center" });
+        }
 
         doc.save(`${nomeArquivo}.pdf`);
     }
