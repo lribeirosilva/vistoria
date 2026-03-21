@@ -148,17 +148,6 @@
         input.click();
     };
 
-    function baixarEAbrirPDF(url) {
-        // Abre o PDF em uma nova aba para visualização imediata
-        window.open(url, '_blank');
-
-        // Força o download silencioso em segundo plano (opcional)
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = url;
-        link.click();
-    }
-
     async function gerarPDF() {
         const nomePessoa = document.getElementById('nome-pessoa').value;
         const numFuncional = document.getElementById('num-funcional').value;
@@ -212,9 +201,8 @@
         const splitObs = doc.splitTextToSize(txtObservacao || "Sem observações adicionais.", pageWidth - 30);
         doc.text(splitObs, 15, y);
         
-        // Rodapé
         doc.text(`Responsável: ${nomePessoa}`, pageWidth / 2, 285, { align: "center" });
-        doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 290, { align: "center", setFontSize: 14 });
+        doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 290, { align: "center" });
 
         // Páginas de Fotos
         fotos.forEach((foto, index) => {
@@ -232,7 +220,6 @@
             doc.setFontSize(12);
             doc.text(legendaTxt, 15, 20);
             
-            // Adiciona a imagem (ajustado para caber na página mantendo proporção aproximada)
             try {
                 doc.addImage(foto, 'JPEG', 15, 30, 180, 135);
             } catch (e) {
@@ -240,23 +227,20 @@
             }
         });
 
-        // Rodapé com assinatura simples em todas as páginas de fotos (opcional)
         const totalPaginas = doc.internal.getNumberOfPages();
         for(let i = 2; i <= totalPaginas; i++) {
             doc.setPage(i);
             doc.setFontSize(8);
             doc.text(`Responsável: ${nomePessoa}`, pageWidth / 2, 285, { align: "center" });
-            doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 290, { align: "center", setFontSize: 14 });
+            doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 290, { align: "center" });
         }
-        // Rodapé na última página
-        //doc.setFontSize(10);
-        //doc.text(`${nomePessoa}`, pageWidth / 2, 275, { align: "center", setFontSize: 14 });
-        //doc.text(`Responsável: ${nomePessoa} - Gerado via Sistema de Vistoria`, pageWidth / 2, 285, { align: "center" });
-        
 
+        // SALVA O ARQUIVO
         doc.save(`${nomeArquivo}.pdf`);
 
-        baixarEAbrirPDF(`${nomeArquivo}.pdf`)
+        // ALTERA O TEXTO DO BOTÃO APÓS SALVAR
+        btnPdf.innerText = "PDF Salvo";
+        btnPdf.style.backgroundColor = "#28a745"; // Opcional: muda para verde para indicar sucesso
     }
 
     
