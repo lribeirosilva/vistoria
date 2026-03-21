@@ -227,11 +227,16 @@
 
         // Rodapé com assinatura simples em todas as páginas de fotos (opcional)
         const totalPaginas = doc.internal.getNumberOfPages();
-        for(let i = 2; i <= totalPaginas; i++) {
+        for(let i = 2; i <= totalPaginas -1; i++) {
             doc.setPage(i);
             doc.setFontSize(8);
             doc.text(`Responsável: ${nomePessoa} - Gerado via Sistema de Vistoria`, pageWidth / 2, 285, { align: "center" });
         }
+        // Rodapé na última página
+        doc.setFontSize(10);
+        //doc.text(`${nomePessoa}`, pageWidth / 2, 275, { align: "center", setFontSize: 14 });
+        doc.text(`Responsável: ${nomePessoa} - Gerado via Sistema de Vistoria`, pageWidth / 2, 285, { align: "center" });
+        doc.text(`Nº Funcional/Identificação: ${numFuncional}`, pageWidth / 2, 288, { align: "center", setFontSize: 14 });
 
         doc.save(`${nomeArquivo}.pdf`);
     }
