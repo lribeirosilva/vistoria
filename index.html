@@ -148,6 +148,17 @@
         input.click();
     };
 
+    function baixarEAbrirPDF(url) {
+        // Abre o PDF em uma nova aba para visualização imediata
+        window.open(url, '_blank');
+
+        // Força o download silencioso em segundo plano (opcional)
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = url;
+        link.click();
+    }
+
     async function gerarPDF() {
         const nomePessoa = document.getElementById('nome-pessoa').value;
         const numFuncional = document.getElementById('num-funcional').value;
@@ -244,7 +255,13 @@
         
 
         doc.save(`${nomeArquivo}.pdf`);
+
+        baixarEAbrirPDF(`${nomeArquivo}.pdf`)
     }
+
+    
+
+
 </script>
 
 </body>
